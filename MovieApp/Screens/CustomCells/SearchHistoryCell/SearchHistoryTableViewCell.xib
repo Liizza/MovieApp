@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchHistoryTableViewCell" rowHeight="111" id="bqS-HD-eLJ" customClass="SearchHistoryTableViewCell" customModule="MovieApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="111"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bqS-HD-eLJ" id="w6r-UT-Wlr">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="111"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ke1-A5-mWd">
+                        <rect key="frame" x="45" y="10" width="338" height="91"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="Evu-vv-z1L">
+                        <rect key="frame" x="10" y="45.666666666666664" width="20" height="19.999999999999993"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="NIv-oG-zBK"/>
+                            <constraint firstAttribute="width" secondItem="Evu-vv-z1L" secondAttribute="height" id="NWQ-r6-5nf"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Evu-vv-z1L" firstAttribute="leading" secondItem="w6r-UT-Wlr" secondAttribute="leading" constant="10" id="PD3-F5-05O"/>
+                    <constraint firstItem="ke1-A5-mWd" firstAttribute="leading" secondItem="Evu-vv-z1L" secondAttribute="trailing" constant="15" id="Rgp-Jb-5ER"/>
+                    <constraint firstAttribute="trailing" secondItem="ke1-A5-mWd" secondAttribute="trailing" constant="10" id="SfR-VI-Kag"/>
+                    <constraint firstItem="Evu-vv-z1L" firstAttribute="centerY" secondItem="ke1-A5-mWd" secondAttribute="centerY" id="ZA4-wE-vpp"/>
+                    <constraint firstAttribute="bottom" secondItem="ke1-A5-mWd" secondAttribute="bottom" constant="10" id="lLM-fn-aLX"/>
+                    <constraint firstItem="ke1-A5-mWd" firstAttribute="top" secondItem="w6r-UT-Wlr" secondAttribute="top" constant="10" id="uRh-f9-lxq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="lTs-90-pZ9"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="searchTermLabel" destination="ke1-A5-mWd" id="D7m-81-ccp"/>
+            </connections>
+            <point key="canvasLocation" x="-25.190839694656489" y="-25"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="clock" width="24" height="24"/>
+    </resources>
+</document>
