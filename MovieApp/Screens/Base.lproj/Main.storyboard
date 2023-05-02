@@ -339,9 +339,6 @@
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Add to Favourites"/>
-                                                <connections>
-                                                    <action selector="buttonPressed:" destination="cpY-81-00p" eventType="touchUpInside" id="sdG-ei-ewP"/>
-                                                </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EH-CI-hD4" customClass="YTPlayerView">
                                                 <rect key="frame" x="20" y="832.5" width="374" height="210.5"/>
@@ -451,9 +448,6 @@
                     <navigationItem key="navigationItem" id="2yi-BW-dT7">
                         <barButtonItem key="rightBarButtonItem" title="Log out" landscapeImage="rectangle.portrait.and.arrow.right" catalog="system" id="uzG-gq-3xc">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="logOutButtonPressed:" destination="V6m-kn-wOz" id="C9h-O6-S4h"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" itemPositioning="fill" id="PDh-7q-uRv">

@@ -66,8 +66,7 @@ class FavoritesViewViewModel {
             switch results{
             case .failure(let error):
             print(error)
-            case .success(let result):
-                print(result)
+            case .success(_):
                 self?.loadMovies()
             
             }
