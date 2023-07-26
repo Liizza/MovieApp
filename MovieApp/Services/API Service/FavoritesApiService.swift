@@ -9,12 +9,14 @@ import Foundation
 
 protocol FavoritesApiService {
     var apiData: ApiData { get set }
+    
     init(apiData: ApiData)
     
-    func getListOfFavoriteMovies(completion:@escaping(Result<[MovieTMDB],Swift.Error>)->Void)
-    func postDeleteFromFavorites(movieId:Int,
-                                 mark:Bool,
-                                 completion:@escaping(Result <PostFavoriteMovieResponse, Swift.Error>)->Void)
+    func getListOfFavoriteMovies(completion: @escaping(Result<[MovieTMDB], Swift.Error>) -> Void)
+    
+    func postDeleteFromFavorites(movieId: Int,
+                                 mark: Bool,
+                                 completion: @escaping(Result <PostFavoriteMovieResponse, Swift.Error>) -> Void)
 }
 
 class AlamofireFavoritesApiService: FavoritesApiService, AlamofireHandler {
@@ -23,14 +25,13 @@ class AlamofireFavoritesApiService: FavoritesApiService, AlamofireHandler {
     required init(apiData: ApiData) {
         self.apiData = apiData
     }
-    
-    
-    func getListOfFavoriteMovies(completion:@escaping(Result<[MovieTMDB],Swift.Error>)->Void){
-        guard let accountId = User.shared.accountId, let sessionId = User.shared.sessionId else {
-            return
-        }
-        getAFRequest(urlRequest: apiData.listOfFavoriteMovie(accountId: accountId, sessionId: sessionId), responseModel: MoviesResponse.self) {
-            response in
+    func getListOfFavoriteMovies(completion: @escaping(Result<[MovieTMDB], Swift.Error>) -> Void) {
+        guard
+            let accountId = User.shared.accountId,
+            let sessionId = User.shared.sessionId
+        else { return }
+        getAFRequest(urlRequest: apiData.listOfFavoriteMovie(accountId: accountId, sessionId: sessionId),
+                     responseModel: MoviesResponse.self) { response in
             switch response {
             case .success(let result):
                 let arrayOfMovies = result.results
@@ -41,19 +42,15 @@ class AlamofireFavoritesApiService: FavoritesApiService, AlamofireHandler {
         }
 
     }
-    
-    func postDeleteFromFavorites(movieId:Int,
-                                 mark:Bool,
-                                 completion:@escaping(Result <PostFavoriteMovieResponse, Swift.Error>)->Void) {
-        guard let accountId = User.shared.accountId, let sessionId = User.shared.sessionId else {
-            return
-        }
-        
-        
+    func postDeleteFromFavorites(movieId: Int,
+                                 mark: Bool,
+                                 completion: @escaping(Result <PostFavoriteMovieResponse, Swift.Error>) -> Void) {
+        guard
+            let accountId = User.shared.accountId,
+            let sessionId = User.shared.sessionId
+        else { return }
         let requestBody = PostFavoriteMovieRequest(mediaType: "movie", mediaID: movieId, favorite: mark)
-        
-        postAFRequest(urlRequest: apiData.addToFavoriteURL(accountId: accountId, sessionId: sessionId), requestBody: requestBody, responseModel: PostFavoriteMovieResponse.self) {
-            response in
+        postAFRequest(urlRequest: apiData.addToFavoriteURL(accountId: accountId, sessionId: sessionId), requestBody: requestBody, responseModel: PostFavoriteMovieResponse.self) { response in
             switch response {
             case .success(let result):
                 completion(.success(result))
@@ -62,5 +59,4 @@ class AlamofireFavoritesApiService: FavoritesApiService, AlamofireHandler {
             }
         }
     }
-    
 }

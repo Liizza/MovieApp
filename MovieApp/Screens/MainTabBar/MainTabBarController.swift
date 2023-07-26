@@ -8,24 +8,17 @@
 import UIKit
 import RxSwift
 import RxCocoa
+
 class MainTabBarController: UITabBarController, Storyboarded {
-    
     @IBOutlet weak var logOutButton: UIBarButtonItem!
-    var viewModel:MainTabBarViewViewModel?
+    var viewModel: MainTabBarViewModelProtocol?
     private let disposeBag = DisposeBag()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
-
-        
     }
     private func bind() {
-        guard let viewModel else {
-            return
-        }
+        guard let viewModel else { return }
         logOutButton.rx.tap.asObservable().bind(to: viewModel.logOutButtonPressed.asObserver()).disposed(by: disposeBag)
-        
     }
-    
 }

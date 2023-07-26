@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 
 class InitialCoordinator: Coordinator {
-    
     let disposeBag = DisposeBag()
     let apiService: ApiService?
     var childCoordinators = [Coordinator]()
@@ -24,7 +23,6 @@ class InitialCoordinator: Coordinator {
     
     func start() {
         let vc = InitialViewController.instantiate()
-        
         let viewModel = InitialViewViewModel(apiService: apiService)
         viewModel.didCheckLoginStatus.asObservable().subscribe(onNext: {[weak self] login in
             if login {
@@ -36,10 +34,12 @@ class InitialCoordinator: Coordinator {
         vc.viewModel = viewModel
         navigationController.pushViewController(vc, animated: false)
     }
+    
     func openLoginController() {
         finish()
         parentCoordinator?.openLoginVC()
     }
+    
     func openMainController() {
         finish()
         parentCoordinator?.openMain()
@@ -48,6 +48,4 @@ class InitialCoordinator: Coordinator {
     func finish() {
         self.parentCoordinator?.removeChildCoordinator(self)
     }
-    
-    
 }

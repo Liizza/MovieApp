@@ -9,10 +9,8 @@ import UIKit
 
 class User {
     static let shared = User()
-    var accountId:Int? = nil
-    var sessionId:String? = nil
-    private init(){
-        
+    var accountId: Int?
+    var sessionId: String?
+    private init() {
     }
-    
 }

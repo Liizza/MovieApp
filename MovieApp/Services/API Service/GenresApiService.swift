@@ -7,14 +7,15 @@
 
 import Foundation
 
-protocol GenresApiService  {
-    var apiData:ApiData { get set }
-    init(apiData:ApiData)
+protocol GenresApiService {
+    var apiData: ApiData { get set }
     
-    func getGenresOfMovies(completion:@escaping(Result<[Genre],Swift.Error>)->Void)
+    init(apiData: ApiData)
     
-    func getMoviesByGenre(genreID:Int, completion:@escaping(Result<[MovieTMDB],Swift.Error>)->Void)
+    func getGenresOfMovies(completion: @escaping(Result<[Genre], Swift.Error>) -> Void)
     
+    func getMoviesByGenre(genreID: Int,
+                          completion: @escaping(Result<[MovieTMDB], Swift.Error>) -> Void)
 }
 
 class AlamofireGenresApiService: GenresApiService, AlamofireHandler {
@@ -23,12 +24,9 @@ class AlamofireGenresApiService: GenresApiService, AlamofireHandler {
     required init(apiData: ApiData) {
         self.apiData = apiData
     }
-    
-    
-    func getGenresOfMovies(completion:@escaping(Result<[Genre],Swift.Error>)->Void){
-        
-        
-        getAFRequest(urlRequest: apiData.genresURL(), responseModel: ListOfGenresResponce.self) { response in
+    func getGenresOfMovies(completion: @escaping(Result<[Genre], Swift.Error>) -> Void) {
+        getAFRequest(urlRequest: apiData.genresURL(),
+                     responseModel: ListOfGenresResponce.self) { response in
             switch response {
             case .success(let result):
                 let arrayOfGenres = result.genres
@@ -36,16 +34,12 @@ class AlamofireGenresApiService: GenresApiService, AlamofireHandler {
             case .failure(let error):
                 completion(.failure(error))
             }
-            
         }
-       
     }
-    func getMoviesByGenre(genreID:Int, completion:@escaping(Result<[MovieTMDB],Swift.Error>)->Void){
-        
-        
-        
-        getAFRequest(urlRequest: apiData.moviesByGenreURL(genreID: genreID), responseModel: MoviesResponse.self) {
-            response in
+    func getMoviesByGenre(genreID: Int,
+                          completion: @escaping(Result<[MovieTMDB], Swift.Error>) -> Void) {
+        getAFRequest(urlRequest: apiData.moviesByGenreURL(genreID: genreID),
+                     responseModel: MoviesResponse.self) { response in
             switch response {
             case .success(let result):
                 let arrayOfMovies = result.results
@@ -55,5 +49,4 @@ class AlamofireGenresApiService: GenresApiService, AlamofireHandler {
             }
         }
     }
-    
 }

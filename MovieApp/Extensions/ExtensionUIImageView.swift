@@ -10,14 +10,20 @@ import UIKit
 extension UIImageView {
     func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
         contentMode = mode
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .white
+        self.addSubview(activityIndicator)
+        activityIndicator.frame = self.bounds
+        activityIndicator.startAnimating()
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard
                 let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, error == nil,
                 let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() { [weak self] in
+            else { return }
+            DispatchQueue.main.async { [weak self] in
+                activityIndicator.removeFromSuperview()
                 self?.image = image
             }
         }.resume()
@@ -27,4 +33,3 @@ extension UIImageView {
         downloaded(from: url, contentMode: mode)
     }
 }
-

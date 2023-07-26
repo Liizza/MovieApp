@@ -24,7 +24,4 @@ class GradientButton: UIButton {
         self.layer.cornerRadius = 10
         gradientLayer.frame = bounds
     }
-
-
-
 }

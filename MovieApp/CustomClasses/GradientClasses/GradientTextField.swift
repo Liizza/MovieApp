@@ -26,7 +26,6 @@ class GradientTextField: UITextField {
         self.layer.addSublayer(gradient)
         return gradient
     }()
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.backgroundColor = .clear
@@ -34,21 +33,16 @@ class GradientTextField: UITextField {
         self.layer.cornerRadius = 10
         gradientBorderLayer.frame = bounds
     }
-    
-    func setPlaceholderColor(color:UIColor) {
-        guard let placeholder = self.placeholder else {
-            return
-        }
+    func setPlaceholderColor(color: UIColor) {
+        guard let placeholder = self.placeholder else { return }
         self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.6)])
-        
     }
-    
-    func addImageView(imageName:String) {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.bounds.height, height:self.bounds.height))
+    func addImageView(imageName: String) {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.bounds.height, height: self.bounds.height))
         let imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: self.bounds.height - 10, height: self.bounds.height - 10))
         let image = UIImage(imageLiteralResourceName: imageName)
         imageView.contentMode = .center
-        imageView.image = image;
+        imageView.image = image
         view.addSubview(imageView)
         self.leftView = view
         self.leftView?.alpha = 1

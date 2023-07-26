@@ -9,17 +9,17 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class GenresViewViewModel {
-    
-    
+protocol GenresViewModelProtocol {
+    var genres: Driver<[Genre]> { get }
+    func viewModelForGenreCell(for genre: Genre?) -> GenreCellViewModel?
+}
+
+class GenresViewViewModel: GenresViewModelProtocol {
     var apiService: ApiService?
     
     private let disposeBag = DisposeBag()
-    
     let didOpenMovieController = PublishSubject<MovieProtocol?>()
-    
     private let _genres = BehaviorRelay<[Genre]>(value: [])
-    
     var genres: Driver<[Genre]> {
         return _genres.asDriver()
     }
@@ -28,10 +28,8 @@ class GenresViewViewModel {
         self.apiService = apiService
         self.getGenres()
     }
-    
     func getGenres() {
-        apiService?.genresApiService.getGenresOfMovies {
-            result in
+        apiService?.genresApiService.getGenresOfMovies { result in
             switch result {
             case .failure(let error):
                 print("Error : \(error)")
@@ -39,17 +37,11 @@ class GenresViewViewModel {
                 self._genres.accept(results)
             }
         }
-                
     }
-    
-    
     func viewModelForGenreCell(for genre: Genre?) -> GenreCellViewModel? {
-        guard let genre else {
-            return nil
-        }
+        guard let genre else { return nil }
         let viewModel = GenreCellViewModel(genre: genre, apiService: apiService?.genresApiService)
         viewModel.didMovieSelected.asObservable().bind(to: didOpenMovieController.asObserver()).disposed(by: disposeBag)
         return viewModel
-        
     }
 }

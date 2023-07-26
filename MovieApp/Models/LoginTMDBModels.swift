@@ -20,7 +20,7 @@ struct TokenResponse: Codable {
 
 struct TokenRequest: Codable {
     let requestToken: String
-    enum CodingKeys:String,CodingKey{
+    enum CodingKeys: String, CodingKey {
         case requestToken = "request_token"
     }
 }
@@ -33,7 +33,6 @@ struct LoginValidation: Codable {
         case requestToken = "request_token"
     }
 }
-
 
 struct SessionResponse: Codable {
     let success: Bool
@@ -103,17 +102,16 @@ class JSONNull: Codable, Hashable {
     }
 }
 
-
-struct DeleteSessionRequest:Codable{
-    let sessionId:String
+struct DeleteSessionRequest: Codable {
+    let sessionId: String
     
-    enum CodingKeys:String,CodingKey {
+    enum CodingKeys: String, CodingKey {
         case sessionId = "session_id"
     }
 }
 
-struct DeleteSessionResponse:Codable {
-    let success:Bool
+struct DeleteSessionResponse: Codable {
+    let success: Bool
 }
 
 

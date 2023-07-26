@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xin-qh-qiS">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search-->
+        <scene sceneID="SkV-yi-WPl">
+            <objects>
+                <viewController storyboardIdentifier="SearchViewController" title="Search" id="xin-qh-qiS" customClass="SearchViewController" customModule="MovieApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CBx-Xm-iuV" customClass="GradientView" customModule="MovieApp" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oM4-Li-JyA">
+                                <rect key="frame" x="0.0" y="173" width="393" height="645"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pfr-gp-ATo" customClass="GradientTextField" customModule="MovieApp" customModuleProvider="target">
+                                <rect key="frame" x="20" y="113" width="353" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.1164073194" green="0.064881571070000005" blue="0.31714285710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="nHb-In-BfJ"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                        <color key="value" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="xin-qh-qiS" id="cLe-tR-kx8"/>
+                                </connections>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0al-c5-2SC" customClass="GradientBorderView" customModule="MovieApp" customModuleProvider="target">
+                                <rect key="frame" x="20" y="163" width="353" height="150"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="150" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eZn-ns-C9Q" customClass="AutomaticHeightTableView" customModule="MovieApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="150"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.89961460660000003" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="eZn-ns-C9Q" secondAttribute="trailing" id="FZo-Oc-F86"/>
+                                    <constraint firstItem="eZn-ns-C9Q" firstAttribute="top" secondItem="0al-c5-2SC" secondAttribute="top" id="Msi-Nm-gSc"/>
+                                    <constraint firstItem="eZn-ns-C9Q" firstAttribute="leading" secondItem="0al-c5-2SC" secondAttribute="leading" id="gzI-lq-nbw"/>
+                                    <constraint firstAttribute="bottom" secondItem="eZn-ns-C9Q" secondAttribute="bottom" id="pNz-YM-KKs"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kb3-Pr-hbV"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0al-c5-2SC" firstAttribute="top" secondItem="Pfr-gp-ATo" secondAttribute="bottom" constant="10" id="4oI-NP-lTb"/>
+                            <constraint firstItem="kb3-Pr-hbV" firstAttribute="trailing" secondItem="0al-c5-2SC" secondAttribute="trailing" constant="20" id="8JD-Fa-wQZ"/>
+                            <constraint firstItem="kb3-Pr-hbV" firstAttribute="trailing" secondItem="Pfr-gp-ATo" secondAttribute="trailing" constant="20" id="Ozh-0m-gTf"/>
+                            <constraint firstItem="0al-c5-2SC" firstAttribute="leading" secondItem="kb3-Pr-hbV" secondAttribute="leading" constant="20" id="TFX-lF-8Dk"/>
+                            <constraint firstItem="kb3-Pr-hbV" firstAttribute="trailing" secondItem="oM4-Li-JyA" secondAttribute="trailing" id="Uyh-Ex-ntH"/>
+                            <constraint firstItem="Pfr-gp-ATo" firstAttribute="top" secondItem="kb3-Pr-hbV" secondAttribute="top" constant="10" id="ZRb-dS-nDD"/>
+                            <constraint firstItem="Pfr-gp-ATo" firstAttribute="leading" secondItem="kb3-Pr-hbV" secondAttribute="leading" constant="20" id="dwN-0k-eBN"/>
+                            <constraint firstItem="kb3-Pr-hbV" firstAttribute="bottom" secondItem="oM4-Li-JyA" secondAttribute="bottom" id="hUC-uC-hIf"/>
+                            <constraint firstItem="oM4-Li-JyA" firstAttribute="leading" secondItem="kb3-Pr-hbV" secondAttribute="leading" id="nPy-7l-dPr"/>
+                            <constraint firstItem="oM4-Li-JyA" firstAttribute="top" secondItem="Pfr-gp-ATo" secondAttribute="bottom" constant="20" id="zsB-wO-jga"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="hpd-vL-QNv"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="trg-ds-mdA"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="movieSearchTextField" destination="Pfr-gp-ATo" id="6hY-mp-kik"/>
+                        <outlet property="searchHistoryTableView" destination="eZn-ns-C9Q" id="cWI-3W-6iG"/>
+                        <outlet property="searchHistoryView" destination="0al-c5-2SC" id="2gR-6R-0gD"/>
+                        <outlet property="searchResultsTable" destination="oM4-Li-JyA" id="jX1-ie-KKp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MGO-2X-q9Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="958" y="10"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+    </resources>
+</document>

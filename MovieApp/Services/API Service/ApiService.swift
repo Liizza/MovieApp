@@ -19,33 +19,22 @@ protocol ApiService {
     var searchApiService: SearchApiService { get set }
     
     var favoritesApiService: FavoritesApiService {get set }
-    
-    
-    
+   
 }
 
 class AlamofireApiService: ApiService {
-    
     var apiData: ApiData
-    
     var authenticateApiService: AuthenticateApiService
-    
     var genresApiService: GenresApiService
-    
     var movieApiService: MovieApiSevice
-    
     var searchApiService: SearchApiService
-    
-    var favoritesApiService: FavoritesApiService
-    
-    init(){
+    var favoritesApiService: FavoritesApiService    
+    init() {
         self.apiData = TMDBApiData()
         authenticateApiService = AlamofireAuthenticateApiService(apiData: self.apiData)
         genresApiService = AlamofireGenresApiService(apiData: self.apiData)
         movieApiService = AlamofireMovieApiSevice(apiData: self.apiData)
         searchApiService = AlamofireSearchApiService(apiData: self.apiData)
         favoritesApiService = AlamofireFavoritesApiService(apiData: self.apiData)
-        
     }
-    
 }

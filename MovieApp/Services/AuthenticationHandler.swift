@@ -9,43 +9,46 @@ import UIKit
 import KeychainSwift
 
 protocol AuthenticationHandler {
-    
     var apiService: ApiService? { get set }
     
-    func checkLoginStatus(_ completion:@escaping(Bool)->())
+    func checkLoginStatus(_ completion: @escaping(Bool) -> Void)
     
-    func logInAndSavePassword(userName:String,
-                              password:String,
-                              savePasword:Bool,
-                              completion: @escaping((Result<Bool, AuthenticationError>)->()))
+    func logInAndSavePassword(userName: String,
+                              password: String,
+                              savePasword: Bool,
+                              completion: @escaping((Result<Bool, AuthenticationError>) -> Void))
     
     func logOut(_ completion: @escaping(Result <DeleteSessionResponse, AuthenticationError>) -> Void)
 }
 extension AuthenticationHandler {
-    
     var keychain: KeychainSwift {
         return KeychainSwift()
     }
     
-    func checkLoginStatus(_ completion:@escaping(Bool)->()){
-        if let username = keychain.get("username"),let password = keychain.get("password"){
-            apiService?.authenticateApiService.authenticate(userName: username, password: password) {
-                result in
-                switch result{
+    func checkLoginStatus(_ completion: @escaping(Bool) -> Void) {
+        if
+            let username = keychain.get("username"),
+            let password = keychain.get("password")
+        {
+            apiService?.authenticateApiService.authenticate(userName: username, password: password) { result in
+                switch result {
                 case .success(_):
                     completion(true)
                 case .failure(_):
                     completion(false)
                 }
-                
             }
-        } else{
+        } else {
             completion(false)
         }
     }
-    func logInAndSavePassword(userName:String, password:String, savePasword:Bool, completion: @escaping((Result<Bool, AuthenticationError>)->())){
-        apiService?.authenticateApiService.authenticate(userName: userName, password: password){ result in
-            switch result{
+    
+    func logInAndSavePassword(userName: String,
+                              password: String,
+                              savePasword: Bool,
+                              completion: @escaping((Result<Bool, AuthenticationError>) -> Void)) {
+        apiService?.authenticateApiService.authenticate(userName: userName, password: password) { result in
+            switch result {
             case .success(_):
                 if savePasword {
                     keychain.set(userName, forKey: "username")
@@ -55,13 +58,11 @@ extension AuthenticationHandler {
             case .failure(let error):
                 completion(.failure(error))
             }
-            
         }
     }
     
     func logOut(_ completion: @escaping(Result <DeleteSessionResponse, AuthenticationError>) -> Void) {
         apiService?.authenticateApiService.deleteSession { response in
-            
             switch response {
             case .success(let result):
                 keychain.delete("username")
@@ -70,10 +71,6 @@ extension AuthenticationHandler {
             case .failure(let error):
                 completion(.failure(error))
             }
-            
         }
-        
     }
 }
-
-

@@ -16,7 +16,6 @@ protocol MovieProtocol {
     var overview: String { get  }
     var posterPath: String? { get  }
     var popularity: Double { get }
-    //var releaseDate: String? { get }
     var video: Bool { get }
     var voteAverage: Double { get }
     var voteCount: Int { get }

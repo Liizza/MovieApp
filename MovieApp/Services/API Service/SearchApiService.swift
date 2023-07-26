@@ -7,17 +7,14 @@
 
 import Foundation
 
-
 protocol SearchApiService {
-    var apiData:ApiData { get set }
-    init(apiData:ApiData)
+    var apiData: ApiData { get set }
     
-    func getSearchResults(searchTerm:String,
-                          completion:@escaping(Result <[MovieTMDB], Swift.Error>)->Void)
+    init(apiData: ApiData)
     
-    
+    func getSearchResults(searchTerm: String,
+                          completion: @escaping(Result <[MovieTMDB], Swift.Error>) -> Void)
 }
-
 
 class AlamofireSearchApiService: SearchApiService, AlamofireHandler {
     var apiData: ApiData
@@ -25,16 +22,13 @@ class AlamofireSearchApiService: SearchApiService, AlamofireHandler {
     required init(apiData: ApiData) {
         self.apiData = apiData
     }
-    
-    
-    func getSearchResults(searchTerm:String,
-                          completion:@escaping(Result <[MovieTMDB], Swift.Error>)->Void){
-        guard let searchRequest = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else {
-          return
-        }
-        
-        getAFRequest(urlRequest: apiData.searchURL(searchTerm: searchRequest), responseModel: MoviesResponse.self) {
-            response in
+    func getSearchResults(searchTerm: String,
+                          completion: @escaping(Result <[MovieTMDB], Swift.Error>) -> Void) {
+        guard
+            let searchRequest = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)
+        else { return }
+        getAFRequest(urlRequest: apiData.searchURL(searchTerm: searchRequest),
+                     responseModel: MoviesResponse.self) { response in
             switch response {
             case .success(let result):
                 let arrayOfMovies = result.results

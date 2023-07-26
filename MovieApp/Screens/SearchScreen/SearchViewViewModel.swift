@@ -9,90 +9,81 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SearchViewViewModel {
+protocol SearchViewModelProtocol {
+    var movies: Driver<[MovieProtocol]> { get }
+    var searchRequests: Driver<[String]> { get }
+    var searchHistoryItemSelected: PublishSubject<IndexPath> { get }
+    var searchButtonPressed: PublishSubject<Void> { get }
+    var searchTerm: BehaviorRelay<String> { get }
+    var movieItemSelected: PublishSubject<IndexPath> { get }
+}
+
+class SearchViewViewModel: SearchViewModelProtocol {
+    private let apiService: ApiService?
     
-    private let apiService:ApiService?
     private let disposeBag = DisposeBag()
-    
     private let _movies = BehaviorRelay<[MovieProtocol]>(value: [])
     private let _searchRequests = BehaviorRelay<[String]>(value: [])
-    private var arrayOfSearchRequest:[String] = []
-    
-    var movies:Driver<[MovieProtocol]>{
+    private var arrayOfSearchRequest: [String] = []
+    var movies: Driver<[MovieProtocol]> {
         return _movies.asDriver()
     }
-    var searchRequests:Driver<[String]>{
+    var searchRequests: Driver<[String]> {
         return _searchRequests.asDriver()
     }
-    
     let searchHistoryItemSelected = PublishSubject<IndexPath>()
     let searchButtonPressed = PublishSubject<Void>()
     var searchTerm = BehaviorRelay<String>(value: "")
     let movieItemSelected = PublishSubject<IndexPath>()
     let didOpenMovieController = PublishSubject<MovieProtocol?>()
     
-
-    init(apiService:ApiService?) {
+    init(apiService: ApiService?) {
         self.apiService = apiService
-        
         bind()
-        
     }
+    
     private func bind() {
-        searchHistoryItemSelected.asObservable().subscribe(onNext:{ [weak self] indexPath in
-            guard let searchTerm = self?.searchTermForIndex(index: indexPath.row) else {
-                return
-            }
+        searchHistoryItemSelected.asObservable().subscribe(onNext: { [weak self] indexPath in
+            guard
+                let searchTerm = self?.searchTermForIndex(index: indexPath.row)
+            else { return }
             self?.arrayOfSearchRequest.remove(at: indexPath.row)
             self?.getMovies(searchTerm: searchTerm)
         }).disposed(by: disposeBag)
-        
         movieItemSelected.asObservable().map({[weak self] indexPath in
             return self?.movieForIndex(index: indexPath.row)
-        }).bind(to:didOpenMovieController).disposed(by: disposeBag)
-        
+        }).bind(to: didOpenMovieController).disposed(by: disposeBag)
         searchButtonPressed.asObservable().subscribe(onNext: {[weak self] _ in
-            guard let self = self else{
-                return
-            }
+            guard let self = self else { return }
             if !self.searchTerm.value.isEmpty {
                 self.getMovies(searchTerm: self.searchTerm.value)
             }
         }).disposed(by: disposeBag)
     }
-    private func getMovies(searchTerm:String) {
+    
+    private func getMovies(searchTerm: String) {
         arrayOfSearchRequest.insert(searchTerm, at: 0)
         if arrayOfSearchRequest.count > 10 {
             _searchRequests.accept(Array(arrayOfSearchRequest[0...10]))
         }
         _searchRequests.accept(arrayOfSearchRequest)
-        
         apiService?.searchApiService.getSearchResults(searchTerm: searchTerm) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let searchResults):
                 self?._movies.accept(searchResults)
-            
             }
-            
         }
-        
-    }
-    private func movieForIndex(index:Int) -> MovieProtocol? {
-        guard index < _movies.value.count else {
-            return nil
-        }
-        return _movies.value[index]
-        
     }
     
-    private func searchTermForIndex(index:Int) -> String? {
-        guard index < _searchRequests.value.count else {
-            return nil
-        }
+    private func movieForIndex(index: Int) -> MovieProtocol? {
+        guard index < _movies.value.count else { return nil }
+        return _movies.value[index]
+    }
+    
+    private func searchTermForIndex(index: Int) -> String? {
+        guard index < _searchRequests.value.count else { return nil }
         return _searchRequests.value[index]
     }
-    
-    
 }

@@ -7,9 +7,15 @@
 
 import Foundation
 
-class MovieCellViewModel {
-    
-    private let movie:MovieProtocol?
+protocol MovieCellViewModelProtocol {
+    var title: String { get }
+    var posterPath: String? { get }
+    var description: String { get }
+    var rating: String { get }
+}
+
+class MovieCellViewModel: MovieCellViewModelProtocol {
+    private let movie: MovieProtocol?
     
     init(movie: MovieProtocol?) {
         self.movie = movie
@@ -23,9 +29,7 @@ class MovieCellViewModel {
     var description: String {
         return movie?.overview ?? ""
     }
-   
-    var rating:String{
+    var rating: String {
         return "⭐️ \(String(format: "%.1f", movie?.voteAverage ?? 0.0))"
     }
-    
 }

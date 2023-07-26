@@ -8,30 +8,21 @@
 import Foundation
 import RxSwift
 
-class InitialViewViewModel: AuthenticationHandler {
-    
+protocol InitialViewModelProtocol {
+    func checkIfLogin()
+}
+
+class InitialViewViewModel: InitialViewModelProtocol, AuthenticationHandler {
     var apiService: ApiService?
     private let disposeBag = DisposeBag()
-    
     let didCheckLoginStatus = PublishSubject<Bool>()
-    
     init(apiService: ApiService?) {
         self.apiService = apiService
-        checkIfLogin()
     }
-    
-    private func checkIfLogin() {
-        
-        DispatchQueue.main.async{[weak self] in
-            guard let self else {
-                return
-            }
+    func checkIfLogin() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
             self.checkLoginStatus(self.didCheckLoginStatus.asObserver().onNext(_:))
         }
-        
-            
     }
-    
-    
-    
 }

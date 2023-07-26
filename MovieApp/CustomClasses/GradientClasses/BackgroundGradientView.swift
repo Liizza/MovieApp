@@ -12,7 +12,7 @@ class GradientView: UIView {
     private lazy var gradientLayer: CAGradientLayer = {
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = self.bounds
-        var colors = [UIColor(red: 1/255, green: 25/255, blue: 147/255, alpha: 0.3),UIColor(red: 148/255, green: 17/255, blue: 0/255, alpha: 0.3)]
+        var colors = [UIColor(red: 1/255, green: 25/255, blue: 147/255, alpha: 0.3), UIColor(red: 148/255, green: 17/255, blue: 0/255, alpha: 0.3)]
         gradient.colors = colors.map { $0.cgColor }
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
@@ -23,7 +23,6 @@ class GradientView: UIView {
         super.layoutSubviews()
         self.backgroundColor = .clear
         gradientLayer.frame = bounds
-        
     }
 
 }

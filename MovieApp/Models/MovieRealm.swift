@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class MovieRealm: Object, MovieProtocol{
+class MovieRealm: Object, MovieProtocol {
     
     @Persisted var adult: Bool
     @Persisted var backdropPath: String?
@@ -18,7 +18,6 @@ class MovieRealm: Object, MovieProtocol{
     @Persisted var overview: String
     @Persisted var posterPath: String?
     @Persisted var popularity: Double
-    //@Persisted var releaseDate: String?
     @Persisted var video: Bool
     @Persisted var voteAverage: Double
     @Persisted var voteCount: Int

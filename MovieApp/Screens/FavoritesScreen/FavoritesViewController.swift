@@ -11,11 +11,9 @@ import RxCocoa
 import Lottie
 
 class FavoritesViewController: BaseViewController {
-    
-    var viewModel:FavoritesViewViewModel?
+    var viewModel: FavoritesViewModelProtocol?
     
     @IBOutlet weak var favoritesTableView: UITableView!
-    
     lazy var loadingView: AnimationView = {
         let view = AnimationView()
         view.animation = Animation.named("loading")
@@ -26,42 +24,35 @@ class FavoritesViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         setUpTableView()
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        addLoading()
-        
-       
+        viewModel?.loadMovies()
     }
-    private func setUpTableView(){
-        guard let viewModel else {
-            return
-        }
-        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addLoading()
+    }
+    
+    private func setUpTableView() {
+        guard let viewModel else { return }
         favoritesTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
-        
-        viewModel.movies.drive(favoritesTableView.rx.items(cellIdentifier: "MovieTableViewCell", cellType: MovieTableViewCell.self)){ row, item, cell in
+        viewModel.movies.drive(favoritesTableView.rx.items(cellIdentifier: "MovieTableViewCell", cellType: MovieTableViewCell.self)) { _, item, cell in
             cell.viewModel = MovieCellViewModel(movie: item)
         }.disposed(by: disposeBag)
-        favoritesTableView.rx.itemDeleted.asObservable().bind(to:viewModel.movieDeleted.asObserver()).disposed(by: disposeBag)
+        favoritesTableView.rx.itemDeleted.asObservable().bind(to: viewModel.movieDeleted.asObserver()).disposed(by: disposeBag)
         favoritesTableView.rx.itemSelected.asObservable().bind(to: viewModel.itemSelected.asObserver()).disposed(by: disposeBag)
-        
     }
     
     private func addLoading() {
-        viewModel?.loadMovies()
-        
-        viewModel?.isLoading.drive(onNext:{ [weak self] isLoading in
+        viewModel?.isLoading.drive(onNext: { [weak self] isLoading in
             if isLoading {
                 self?.addLoadingAnimation()
             } else {
                 self?.loadingView.removeFromSuperview()
             }
         }).disposed(by: disposeBag)
-        
     }
     
     private func addLoadingAnimation() {
@@ -74,6 +65,3 @@ class FavoritesViewController: BaseViewController {
         NSLayoutConstraint.activate([centerX, centerY, height, width])
     }
 }
-
-
-

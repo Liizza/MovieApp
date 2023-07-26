@@ -10,29 +10,31 @@ import KeychainSwift
 import RxSwift
 import RxCocoa
 
-class LoginViewViewModel: AuthenticationHandler {
-    
+protocol LoginViewModelProtocol {
+    var userName: BehaviorRelay<String> { get }
+    var password: BehaviorRelay<String> { get }
+    var loginButtonPressed: PublishSubject<Void> { get }
+    var ifStayLoginSwitchPressed: PublishSubject<Bool> { get }
+    var switchIsOn: Bool { get }
+    var notificationLabelText: Driver<String> { get }
+}
+
+class LoginViewViewModel: LoginViewModelProtocol, AuthenticationHandler {
     var apiService: ApiService?
     
     private let disposeBag = DisposeBag()
-    
     let userName = BehaviorRelay<String>(value: "")
     let password = BehaviorRelay<String>(value: "")
-    
     let loginButtonPressed = PublishSubject<Void>()
-    
     let ifStayLoginSwitchPressed = PublishSubject<Bool>()
-    var switchIsOn = UserDefaults.standard.bool(forKey:"StayLoginIn")
-    
+    var switchIsOn = UserDefaults.standard.bool(forKey: "StayLoginIn")
     let didLogin = PublishSubject<Void>()
-    
     private let _notificationLabelText = BehaviorRelay<String>(value: "")
-
-    var notificationLabelText: Driver<String>{
+    var notificationLabelText: Driver<String> {
         return _notificationLabelText.asDriver()
-    }
+     }
     
-    init(apiService:ApiService?) {
+    init(apiService: ApiService?) {
         self.apiService = apiService
         bindLogInButton()
         bindSwitch()
@@ -43,26 +45,28 @@ class LoginViewViewModel: AuthenticationHandler {
             UserDefaults.standard.set(isOn, forKey: "StayLoginIn")
         }).disposed(by: disposeBag)
     }
+    
     private func bindLogInButton() {
         self.loginButtonPressed.asObservable().subscribe(onNext: {[weak self] in
             self?.login()
         }).disposed(by: disposeBag)
     }
-   
-    private func login(){
-        guard !self.userName.value.isEmpty, !password.value.isEmpty else{
+    
+    private func login() {
+        guard
+            !self.userName.value.isEmpty,
+            !password.value.isEmpty
+        else {
             _notificationLabelText.accept("Enter username and password")
             return
         }
-        
-        logInAndSavePassword(userName: self.userName.value, password: self.password.value, savePasword: UserDefaults.standard.bool(forKey:"StayLoginIn")) { [weak self] result in
+        logInAndSavePassword(userName: self.userName.value, password: self.password.value, savePasword: UserDefaults.standard.bool(forKey: "StayLoginIn")) { [weak self] result in
             switch result {
             case .success(_:):
                 self?.didLogin.asObserver().onNext(())
             case .failure(let error):
                 self?._notificationLabelText.accept(error.rawValue)
             }
-            
         }
     }
 }

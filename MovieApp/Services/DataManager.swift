@@ -8,20 +8,14 @@
 import Foundation
 import RealmSwift
 
-class DataManager
-{
+class DataManager {
     static let shared = DataManager()
     
     let realm = try? Realm()
-    
-    private init(){
-        
+    private init() {
     }
-    func saveMovies(media:MovieTMDB?) {
-        guard let realm  else {
-            return
-        }
-        
+    func saveMovies(media: MovieTMDB?) {
+        guard let realm  else { return }
         let movieRealm = MovieRealm()
         movieRealm.adult = media?.adult ?? false
         movieRealm.backdropPath = media?.backdropPath ?? ""
@@ -35,25 +29,17 @@ class DataManager
         movieRealm.voteAverage = media?.voteAverage ?? 0.0
         movieRealm.voteCount = media?.voteCount ?? 0
         realm.add(movieRealm, update: .all)
-        
     }
-    func getListOfMovies()-> [MovieRealm]? {
-        guard let realm  else {
-            return nil
-        }
+    func getListOfMovies() -> [MovieRealm]? {
+        guard let realm  else { return nil }
         let results = Array(realm.objects(MovieRealm.self))
         return results
     }
-    func deleteMovies(_ completion: @escaping()->()){
-        guard let realm  else {
-            return
-        }
+    func deleteMovies(_ completion: @escaping() -> Void) {
+        guard let realm  else { return }
         try? realm.write {
             realm.delete((realm.objects(MovieRealm.self)))
             completion()
         }
-        
     }
-    
-    
 }

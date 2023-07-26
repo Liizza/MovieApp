@@ -8,12 +8,10 @@
 import UIKit
 
 class GradientBorderView: UIView {
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = 10
         gradientBorder(bouds: self.bounds, cornerRadius: 10)
-        
     }
     func gradientBorder(bouds: CGRect, cornerRadius: CGFloat) {
         let gradient = CAGradientLayer()
@@ -31,11 +29,8 @@ class GradientBorderView: UIView {
         gradient.mask = shape
         if let layer = self.layer.sublayers?.last as? CAGradientLayer {
             layer.removeFromSuperlayer()
-            
         }
         self.layer.addSublayer(gradient)
         return 
-    }
-
-    
+    }    
 }

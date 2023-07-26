@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QvE-qx-S4O">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Genres-->
+        <scene sceneID="87f-tr-Dnt">
+            <objects>
+                <viewController storyboardIdentifier="GenresViewController" title="Genres" id="QvE-qx-S4O" customClass="GenresViewController" customModule="MovieApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rqw-rd-vhb" customClass="GradientView" customModule="MovieApp" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mZc-W8-5t4">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="K8P-ls-wSt"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mZc-W8-5t4" firstAttribute="leading" secondItem="K8P-ls-wSt" secondAttribute="leading" id="Lkh-i9-iw4"/>
+                            <constraint firstItem="mZc-W8-5t4" firstAttribute="top" secondItem="rqw-rd-vhb" secondAttribute="top" id="Qwa-kj-GtH"/>
+                            <constraint firstItem="mZc-W8-5t4" firstAttribute="trailing" secondItem="K8P-ls-wSt" secondAttribute="trailing" id="bAn-wM-5IF"/>
+                            <constraint firstItem="K8P-ls-wSt" firstAttribute="bottom" secondItem="mZc-W8-5t4" secondAttribute="bottom" id="ebj-kF-flN"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Trending Movies" image="film" catalog="system" id="ulW-xm-Ae1"/>
+                    <navigationItem key="navigationItem" id="Bv9-b9-cD9"/>
+                    <connections>
+                        <outlet property="genresTableView" destination="mZc-W8-5t4" id="XMr-fh-vDi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bkM-LV-tny" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="524" y="-113"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="film" catalog="system" width="128" height="93"/>
+    </resources>
+</document>

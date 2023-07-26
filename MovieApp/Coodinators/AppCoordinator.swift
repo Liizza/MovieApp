@@ -9,11 +9,10 @@ import UIKit
 
 class AppCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
-    var apiService:ApiService?
-    
+    var apiService: ApiService?
     var window: UIWindow?
     
-    init(window:UIWindow?){
+    init(window: UIWindow?) {
         self.window = window
         self.apiService = AlamofireApiService()
     }
@@ -21,7 +20,8 @@ class AppCoordinator: Coordinator {
     func start() {
         openInitialVC()
     }
-    func openInitialVC(){
+    
+    func openInitialVC() {
         window?.rootViewController = nil
         let navController = UINavigationController()
         let child = InitialCoordinator(apiService: apiService, navigationController: navController, parentCoordinator: self)
@@ -30,7 +30,8 @@ class AppCoordinator: Coordinator {
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
     }
-    func openLoginVC(){
+    
+    func openLoginVC() {
         window?.rootViewController = nil
         let navController = UINavigationController()
         let child = LoginCoordinator(navigationController: navController, apiService: apiService, parentCoorditor: self)
@@ -38,25 +39,20 @@ class AppCoordinator: Coordinator {
         child.start()
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
-    
     }
-    func openMain(){
+    
+    func openMain() {
         window?.rootViewController = nil
         let mainNavigationController = UINavigationController()
         mainNavigationController.navigationBar.barStyle = .black
-        let child = MainCoordinator(navigationController: mainNavigationController,apiService: apiService, parentCoordinator: self)
+        let child = MainCoordinator(navigationController: mainNavigationController, apiService: apiService, parentCoordinator: self)
         self.addChildCoordinator(child)
         child.start()
         window?.rootViewController = mainNavigationController
         window?.makeKeyAndVisible()
-        
     }
     
     func finish() {
         print("finish")
     }
-    
-    
-    
-    
 }

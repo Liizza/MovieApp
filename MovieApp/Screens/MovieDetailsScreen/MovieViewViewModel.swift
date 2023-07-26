@@ -8,17 +8,24 @@
 import Foundation
 import RxSwift
 import RxCocoa
-class MovieViewViewModel {
-    
+
+protocol MovieViewModelProtocol {
+    var title: String { get }
+    var description: String { get }
+    var posterPath: String? { get }
+    var rating: String { get }
+    var addToFavoritesButtonPressed: PublishSubject<Void> { get }
+    var videos: Driver<[Video]> { get }
+}
+
+class MovieViewViewModel: MovieViewModelProtocol {
     private let apiService: ApiService?
-    private var movie:MovieProtocol
+    private var movie: MovieProtocol
     
     private let disposeBag = DisposeBag()
-    private let _videos = BehaviorRelay<[Video]>(value:[])
+    private let _videos = BehaviorRelay<[Video]>(value: [])
     private let _ifSuccess = BehaviorRelay<Bool>(value: false)
-    
     let addToFavoritesButtonPressed = PublishSubject<Void>()
-    
     var ifSuccess: Driver<Bool> {
         return _ifSuccess.asDriver()
     }
@@ -37,38 +44,31 @@ class MovieViewViewModel {
     var id: Int {
         return movie.id
     }
-    var rating:String {
+    var rating: String {
         return "⭐️ \(movie.voteAverage)"
     }
     
-   
-    
-    init(movie:MovieProtocol, apiService: ApiService?) {
+    init(movie: MovieProtocol, apiService: ApiService?) {
         self.apiService = apiService
         self.movie = movie
         loadVideo()
         self.addToFavoritesButtonPressed.asObservable()
-            .subscribe(onNext:{ [weak self] in
+            .subscribe(onNext: { [weak self] in
                 self?.addToFavourites()}).disposed(by: disposeBag)
     }
-    private func loadVideo(){
+    private func loadVideo() {
         self._videos.accept([])
-        apiService?.movieApiService.getMovieVideos(movieId: movie.id){
-            [weak self] response in
-            switch response{
+        apiService?.movieApiService.getMovieVideos(movieId: movie.id) { [weak self] response in
+            switch response {
             case .failure(let error):
                 print(error)
             case .success(let results):
                 self?._videos.accept(results)
-                
             }
-            
         }
-        
-        
     }
-    private func addToFavourites(){
-        apiService?.movieApiService.postAddFavoriteMovie(movieId:movie.id, mark: true){ [weak self] response in
+    private func addToFavourites() {
+        apiService?.movieApiService.postAddFavoriteMovie(movieId: movie.id, mark: true) { [weak self] response in
             switch response {
             case .failure(let error):
                 print(error)
@@ -76,11 +76,7 @@ class MovieViewViewModel {
             case .success(_):
                 print("add to favorites")
                 self?._ifSuccess.accept(true)
-                
-                
             }
-            
         }
-        
     }
 }

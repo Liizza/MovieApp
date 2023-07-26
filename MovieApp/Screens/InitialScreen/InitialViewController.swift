@@ -9,10 +9,9 @@ import UIKit
 import Lottie
 import RxSwift
 import RxCocoa
+
 class InitialViewController: BaseViewController {
-    
-    var viewModel:InitialViewViewModel?
-    
+    var viewModel: InitialViewModelProtocol?
     lazy var loadingView: AnimationView = {
         let view = AnimationView()
         view.animation = Animation.named("loading")
@@ -20,13 +19,13 @@ class InitialViewController: BaseViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.checkIfLogin()
         addLoadingAnimation()
-        
-        
     }
     
     private func addLoadingAnimation() {
@@ -38,7 +37,4 @@ class InitialViewController: BaseViewController {
         let width = loadingView.widthAnchor.constraint(equalTo: loadingView.heightAnchor, multiplier: 1)
         NSLayoutConstraint.activate([centerX, centerY, height, width])
     }
-
-
 }
-

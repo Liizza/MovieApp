@@ -16,7 +16,6 @@ struct Genre: Codable {
     let name: String
 }
 
-
 struct PostFavoriteMovieResponse: Codable {
     let success: Bool
     let statusCode: Int
